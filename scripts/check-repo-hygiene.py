@@ -40,6 +40,8 @@ ROOT_ALLOW_DIRS = {
     "man", "vignettes", "inst", "renv",
     # The deposit /replication-package assembles for a journal's data editor.
     "replication_package",
+    # Standalone manuscripts, one subfolder per paper (source + figures; compiled PDFs are gitignored).
+    "papers",
 }
 
 # Names that mean "I was experimenting". These must not live in tracked source.

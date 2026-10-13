@@ -21,6 +21,9 @@
 # Compiled PDFs (uncomment to track specific PDFs)
 # *.pdf
 
+# Compiled PDFs of papers under papers/ (regenerable from the .tex)
+papers/**/*.pdf
+
 # Python
 __pycache__/
 *.pyc
