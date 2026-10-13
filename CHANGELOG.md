@@ -6,6 +6,21 @@ If you have forked this template, see the **Upgrading** section at the bottom fo
 
 ---
 
+## v2.7.0 — 2026-10-13
+
+### Added
+
+- **`/tex-to-docx`** converts a LaTeX paper to a Word `.docx` through pandoc with a custom
+  Times New Roman 12 pt / 1.5-spacing template: numbered headings, native editable equations,
+  inline figures, numbered citations, a page-number footer, and a structural check that says
+  plainly it has not rendered the file in Word.
+
+The hook battery is unchanged: 312 cases, seconds to run.
+
+**Inventory at release: 62 skills, 18 agents, 37 rules, 11 hooks, 10 gates**
+
+---
+
 ## v2.6.0 — 2026-09-26
 
 A **currency and consistency release.** Claude Opus 5.5 and Fable 5.1 shipped after v2.5.1: the

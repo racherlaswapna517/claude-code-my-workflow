@@ -190,7 +190,7 @@ This workflow is designed as a **single hub for an entire research program** —
 ## What's Included
 
 <details>
-<summary><strong>18 agents, 61 skills, 37 rules, 11 hooks</strong> (click to expand)</summary>
+<summary><strong>18 agents, 62 skills, 37 rules, 11 hooks</strong> (click to expand)</summary>
 
 ### Agents (`.claude/agents/`)
 
@@ -231,6 +231,7 @@ This workflow is designed as a **single hub for an entire research program** —
 | `/qa-quarto` | Adversarial critic-fixer loop (loops until dry; 5-round cap is a fallback) |
 | `/slide-excellence` | Combined multi-agent review |
 | `/translate-to-quarto` | Full Beamer-to-Quarto translation — Phase 0 pre-flight plus 12 translation phases (1–11 and a 6.5 pedagogy review) |
+| `/tex-to-docx` | Convert a LaTeX paper to Word (.docx) via pandoc, keeping Times New Roman 12 pt, 1.5 spacing, numbered headings, native equations, figures and tables |
 | `/vaccinate` | Measure whether a check, gate, or AI reviewer actually detects the failure it targets — seeds defects + a clean control, reports recall and false-positive rate into a qualification ledger |
 | `/adjudicate-review` | Turn incoming findings — AI review, referee report, linter, second model — into verified fixes. Every finding is a CANDIDATE until checked against the source |
 | `/blast-radius` | Before and after changing anything shared (return value, schema, default, units), enumerate every consumer and actually run them |

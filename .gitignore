@@ -108,3 +108,5 @@ Quarto/*_files/
 *.doc
 *.docx
 /quality_reports
+# VS Code workspace file (machine-local; the hygiene gate rejects root-level files)
+*.code-workspace
