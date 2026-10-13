@@ -1,6 +1,10 @@
-\documentclass[11pt]{article}
+\documentclass[12pt]{article}
 
 \usepackage[margin=1in]{geometry}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\usepackage{setspace}
+\onehalfspacing
 \usepackage{amsmath,amssymb}
 \usepackage{graphicx}
 \usepackage{booktabs}
@@ -16,17 +20,42 @@
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.6em}
 
+\title{Adversarial Attacks and Defenses: A Survey}
+
+\author{%
+  \begin{tabular}[t]{c}
+    Racherla Swapna\\
+    Research Scholar, Department of Computer Science and Engineering,\\
+    Jawaharlal Nehru Technological University, Hyderabad, Telangana.
+  \end{tabular}
+  \and
+  \begin{tabular}[t]{c}
+    Dr.\ R.\ Sridevi\\
+    Professor, Department of Computer Science and Engineering,\\
+    Jawaharlal Nehru Technological University, Hyderabad, Telangana.
+  \end{tabular}%
+}
+\date{}
+
 \begin{document}
+
+\maketitle
+
+\begin{abstract}\normalsize
+Deep learning is a subset of machine learning. It uses advanced techniques such as neural networks, which have many hidden layers that mimic the human brain, and it is used in a wide range of applications. Deep learning techniques are prone to adversarial attacks. Adversarial attacks use adversarial samples, which are injected into the system to fool the model, so that the system fails to produce correct results. These samples can be injected during the training phase or the testing phase. Hence, it is crucial to provide robustness to deep learning applications against these adversaries. In this paper, we provide a detailed discussion of various types of adversarial attacks and of the defense techniques against them.
+\end{abstract}
+
+\noindent\textbf{Keywords---} Deep Learning, Adversarial Attacks, Adversaries.
 
 \section{Introduction}
 
-Deep Learning is used in various domains of machine learning (ML): image classification, object recognition, object detection, speech recognition, language translation, voice synthesis, natural language processing. All these applications uses different deep learning techniques like Deep Neural Networks (DNN), Deep Reinforcement Learning (DRL), Federated Machine Learning (FL) and Transfer Learning (TL)~\cite{yuan2019}. Deep learning is proven to give significant progress in these domains. Many of these applications require safety and security failing may result in incorrect results. DNN, DRL, FL and TL techniques are prone to adversarial attacks which result in poor performance. Adversarial attacks pose a serious threat to the success of deep learning in practice. DNNs are vulnerable to towards adversarial attacks that exploit imperceptibly perturbed examples to fool the neural networks. For an instance deliberately crafted adversarial examples can easily deceive DNN based systems such as hand writing recognition, face detection and autonomous vehicle making models generate incorrect outputs. To protect deep learning neural networks from adversarial attacks researchers have been actively developing robust defense mechanisms. These defenses are crucial for ensuring the reliability and security of deep learning applications. some of the ongoing defense strategies for enhancing the robustness of deep learning models are adversarial training, input transformation and architectural modifications which allow real world applications to function effectively without interruptions. This study aims to systematically investigate the evolving landscape of adversarial threats against deep learning models and the defense strategies developed to address these vulnerabilities. The analysis considers a wide range of adversarial attack techniques under diverse threat assumptions, attacker capabilities, and operational scenarios. In contrast to surveys that primarily focus on particular application domains, this work adopts a broader perspective by examining adversarial attacks and corresponding mitigation approaches across multiple deep learning contexts. In addition, the study discusses representative practical examples to demonstrate how these attacks can be realized, how different defense mechanisms respond to them, and the challenges associated with achieving reliable model robustness in practical environments.
+Deep learning is used in various application domains, including image classification, object recognition, object detection, speech recognition, language translation, voice synthesis, and natural language processing. All these applications use different deep learning techniques such as Deep Neural Networks (DNN), Deep Reinforcement Learning (DRL), Federated Machine Learning (FL) and Transfer Learning (TL)~\cite{yuan2019}. Deep learning has achieved significant progress in these domains. Many of these applications are safety- and security-critical, and failures may produce incorrect results. DNN, DRL, FL and TL techniques are prone to adversarial attacks, which degrade performance. Adversarial attacks pose a serious threat to the success of deep learning in practice. DNNs are vulnerable to adversarial attacks that exploit imperceptibly perturbed examples to fool the neural networks. For instance, deliberately crafted adversarial examples can deceive DNN-based systems, such as handwriting recognition, face detection and autonomous-vehicle models, into generating incorrect outputs. To protect deep neural networks from adversarial attacks, researchers have been actively developing robust defense mechanisms. These defenses are crucial for ensuring the reliability and security of deep learning applications. Some of the ongoing defense strategies for enhancing the robustness of deep learning models are adversarial training, input transformation and architectural modifications, which allow real-world applications to keep functioning effectively. This study surveys adversarial attacks against deep neural networks and the main defense strategies developed against them. It considers attack techniques under different threat assumptions, attacker capabilities, and operational scenarios, and it presents the formulations of representative attacks together with the training-based and denoising-based defenses that respond to them. The discussion centers on image classification, where most of these methods were developed and evaluated. Attacks on deep reinforcement learning, federated learning, and transfer learning are outside its scope, and those techniques are introduced in Section~2 as background only.
 
-This paper presents a comprehensive investigation of adversarial attacks and corresponding defense mechanisms targeting deep learning techniques. To establish a systematic understanding of the research domain, relevant concepts, terminology, and key terms are organized into a structured taxonomy. Furthermore, adversarial threat models are classified based on their characteristics, attacker capabilities, objectives, and underlying attack settings, providing a unified framework for analyzing the security and robustness of deep learning systems.
+This paper presents a structured survey of adversarial attacks and corresponding defense mechanisms for deep neural networks. To establish a systematic understanding of the research domain, relevant concepts, terminology, and key terms are organized into a structured taxonomy. Furthermore, adversarial threat models are classified based on their characteristics, attacker capabilities, objectives, and underlying attack settings, providing a unified framework for analyzing the security and robustness of deep learning systems. The rest of the paper is organized as follows. Section~2 gives the necessary background, Section~3 covers adversarial attacks, Section~4 covers adversarial defenses, and Section~5 concludes.
 
 \section{Background}
 
-\textbf{Taxonomy of Deep Learning Techniques and Adversarial model:}
+\textbf{Taxonomy of Deep Learning Techniques and Adversarial Model:}
 
 \paragraph{Deep Neural Network.} The concept of a deep neural network is inspired by biological neural systems. A neural network consists of an interconnected collection of artificial neurons. An individual neuron receives an input vector $x$ through multiple incoming channels, computes an inner product with a weight vector $w$, and passes the result through a non-linear activation function $f(\cdot)$. The output of the neuron is given by $y = f(w^{T}x + b)$. A neural network is formed through the layered interconnection of these processing units.
 
@@ -48,11 +77,11 @@ Convolutional Neural Networks (CNNs) are primarily designed to process structure
   \label{fig:cnn}
 \end{figure}
 
-\paragraph{Federated Learning (FL).} Federated learning (FL) is a machine learning setting where many clients (e.g.\ mobile devices or whole organizations) collaboratively train a model under the orchestration of a central server (e.g.\ service provider), while keeping the training data decentralized. FL embodies the principles of focused data collection and minimization, and can mitigate many of the systemic privacy risks and costs resulting from traditional, centralized machine learning and data science approaches~\cite{kairouz2021}.
+\paragraph{Federated Learning (FL).} Federated learning (FL) is a machine learning setting where many clients (e.g., mobile devices or whole organizations) collaboratively train a model under the orchestration of a central server (e.g., service provider), while keeping the training data decentralized. FL embodies the principles of focused data collection and minimization, and can mitigate many of the systemic privacy risks and costs resulting from traditional, centralized machine learning and data science approaches~\cite{kairouz2021}.
 
 \paragraph{Transfer Learning (TL).} Transfer learning is a machine learning paradigm in which knowledge acquired by a model from a source task or domain is leveraged to improve the learning process of a related target task or domain. Instead of developing a model entirely from the beginning, the parameters or feature representations learned from the source task can be adapted to the target problem. This approach is particularly beneficial when the target task has limited labeled training data, as it can reduce the computational cost and training time while improving model generalization and predictive performance. The effectiveness of transfer learning is largely attributed to the reuse of transferable representations that capture features applicable across related tasks or domains.
 
-\paragraph{Deep Reinforcement Learning (DRL).} Deep Reinforcement Learning (DRL) is an AI technique that combines reinforced learning with deep neural networks. It learns to take actions based on feedback in the form of a reward or a penalty signal. This feedback about reward and penalty defines the policy that maximizes the reward function. This policy is represented as the neural network whose input is the current state and output is the probability distribution of possible actions. Inherently reinforced learning is well suited for the application without having a training data set. In deep reinforcement learning, the decision is made based on feedback from the environment.
+\paragraph{Deep Reinforcement Learning (DRL).} Deep Reinforcement Learning (DRL) is an AI technique that combines reinforcement learning with deep neural networks. It learns to take actions based on feedback in the form of a reward or a penalty signal. This feedback about reward and penalty defines the policy that maximizes the reward function. This policy is represented by a neural network whose input is the current state and output is the probability distribution of possible actions. Reinforcement learning is inherently well suited to applications without a training dataset. In deep reinforcement learning, the decision is made based on feedback from the environment.
 
 \section{Adversarial Attacks}
 
@@ -64,7 +93,7 @@ Formally, an adversarial threat model is parameterized along four orthogonal ope
 
 \subsection{Adversary's Goal}
 
-Based on the adversary's operational objective, adversarial attacks are broadly classified into confidence reduction, untargeted misclassification targeted misclassification and misclassification.
+Based on the adversary's operational objective, adversarial attacks are broadly classified into confidence reduction, untargeted misclassification, targeted misclassification, and misclassification.
 
 \paragraph{Untargeted Attacks.} The objective of an untargeted attack is to force the model into any incorrect classification, regardless of the resulting output label. For instance, given an image of a cat, the adversary introduces a subtle perturbation such that the model fails to predict the class `cat' and instead outputs an arbitrary incorrect class.
 
@@ -72,7 +101,7 @@ Based on the adversary's operational objective, adversarial attacks are broadly 
 
 \paragraph{Confidence Reduction.} Confidence reduction attacks are adversarial perturbations engineered to suppress the prediction confidence of deployed deep learning systems. For instance, in image classification, an adversary crafts subtle input perturbations that drive down the confidence score of the true class or distribute probability mass across alternative categories, significantly impairing the model's decision certainty.
 
-\paragraph{Missclassification.} Misclassification attacks are adversarial perturbations engineered to push input representations across a model's learned decision boundaries, thereby compelling the classifier to assign incorrect output labels to legitimate samples. The objective is to alter the model's prediction to any incorrect class distinct from the original label.
+\paragraph{Misclassification.} Misclassification attacks are adversarial perturbations engineered to push input representations across a model's learned decision boundaries, thereby compelling the classifier to assign incorrect output labels to legitimate samples. The objective is to alter the model's prediction to any incorrect class distinct from the original label.
 
 \subsection{Based on Distance Metrics}
 
@@ -110,9 +139,9 @@ In a white-box attack, the adversary possesses complete knowledge of the target 
 
 \subparagraph{Method.} Let $x$ be a clean input with true label $y$, $\theta$ the model parameters, and $J(\theta, x, y)$ the training loss. FGSM takes a single step in the direction that increases the loss, using only the sign of the gradient:
 \begin{equation}
-  x_{adv} = x + \epsilon \cdot \sign\!\big(\nabla_x J(\theta, x, y)\big)
+  x_{\mathrm{adv}} = x + \epsilon \cdot \sign\!\big(\nabla_x J(\theta, x, y)\big)
 \end{equation}
-Here $\epsilon$ controls the perturbation magnitude. Because the sign operation gives every input dimension a change of exactly $\pm\epsilon$, the perturbation satisfies an $L_\infty$ constraint, $\lVert x_{adv} - x \rVert_\infty \le \epsilon$~\cite{goodfellow2015}. The adversarial example is then typically clipped to the valid input range (e.g., $[0,1]$ for images).
+Here $\epsilon$ controls the perturbation magnitude. Because the sign operation gives every input dimension a change of exactly $\pm\epsilon$, the perturbation satisfies an $L_\infty$ constraint, $\lVert x_{\mathrm{adv}} - x \rVert_\infty \le \epsilon$~\cite{goodfellow2015}. The adversarial example is then typically clipped to the valid input range (e.g., $[0,1]$ for images).
 
 \subparagraph{Key properties.}
 \begin{itemize}
@@ -123,13 +152,13 @@ Here $\epsilon$ controls the perturbation magnitude. Because the sign operation 
   \item \textbf{Use in defense.} Goodfellow et al.\ also proposed using FGSM examples during training (adversarial training) as a regularizer to improve robustness~\cite{goodfellow2015}.
 \end{itemize}
 
-For a targeted attack, the same method is applied, with the key difference being that the perturbation is generated in the direction of the negative gradient of the loss with respect to the target class, encouraging the model to classify the input as the desired target class~\cite{li2020}.
+For a targeted attack, the same method is applied, with the key difference being that the perturbation is generated in the direction of the negative gradient of the loss with respect to the target class, encouraging the model to classify the input as the desired target class~\cite{li2020}:
 \begin{equation}
-  x_{adv} = x - \epsilon \cdot \sign\!\big(\nabla_x J(\theta, x, y_t)\big)
+  x_{\mathrm{adv}} = x - \epsilon \cdot \sign\!\big(\nabla_x J(\theta, x, y_t)\big)
 \end{equation}
 where:
 \begin{itemize}
-  \item $x_{adv}$ --- generated adversarial example.
+  \item $x_{\mathrm{adv}}$ --- generated adversarial example.
   \item $x$ --- original input.
   \item $\epsilon$ --- perturbation magnitude.
   \item $J(\theta, x, y_t)$ --- loss function evaluated with respect to the target class $y_t$.
@@ -167,7 +196,7 @@ where the decision boundary corresponds to the hyperplane $F = \{x : w^{T}x + b 
 \begin{equation}
   \delta^{*}(x) = -\frac{f(x)}{\lVert w \rVert_2^{2}}\, w
 \end{equation}
-Because deep neural networks are non-linear, their decision boundaries are represented by complex, non-linear hyper-surfaces. DeepFool addresses this by iteratively linearizing the boundary around the current iterate $x_i$ using a first-order Taylor approximation:
+Because deep neural networks are non-linear, their decision boundaries are represented by complex, non-linear hypersurfaces. DeepFool addresses this by iteratively linearizing the boundary around the current iterate $x_i$ using a first-order Taylor approximation:
 \begin{equation}
   f(x) \approx f(x_i) + \nabla f(x_i)^{T}(x - x_i)
 \end{equation}
@@ -230,7 +259,7 @@ This allows the optimization problem to be solved smoothly using standard uncons
     \dfrac{\partial F_t(x)}{\partial x_i} \left\lvert \displaystyle\sum_{j \neq t} \dfrac{\partial F_j(x)}{\partial x_i} \right\rvert, & \text{otherwise}
   \end{cases}
 \end{equation}
-The algorithm iteratively selects the highest-scoring pixel pair, saturating their values until $\argmax_j F_j(x_{adv}) = t$ or the sparsity budget $\lVert\delta\rVert_0 \le \gamma \cdot d$ is reached. Due to its $\mathcal{O}(d^2)$ pairwise Jacobian complexity, JSMA scales poorly to high-dimensional datasets~\cite{papernot2018sok,papernot2016limitations}.
+The algorithm iteratively selects the highest-scoring pixel pair, saturating their values until $\argmax_j F_j(x_{\mathrm{adv}}) = t$ or the sparsity budget $\lVert\delta\rVert_0 \le \gamma \cdot d$ is reached. Due to its $\mathcal{O}(d^2)$ pairwise Jacobian complexity, JSMA scales poorly to high-dimensional datasets~\cite{papernot2018sok,papernot2016limitations}.
 
 \paragraph{Universal Adversarial Perturbations (UAP).} Proposed by Moosavi-Dezfooli et al.~\cite{moosavi2017}, a Universal Adversarial Perturbation (UAP) is a single, input-agnostic noise vector $v \in \mathbb{R}^d$ that misleads a classifier across almost all inputs sampled from a data distribution $\mu$.
 
@@ -263,7 +292,7 @@ We formalize three operational regimes: Non-Adaptive Black-Box, Adaptive Black-B
 
 \begin{table}[htbp]
   \centering
-  \small
+  \normalsize
   \renewcommand{\arraystretch}{1.3}
   \begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.12\textwidth}
                     >{\raggedright\arraybackslash}p{0.16\textwidth}
@@ -290,8 +319,8 @@ We formalize three operational regimes: Non-Adaptive Black-Box, Adaptive Black-B
   \begin{equation}
     \delta^{*} = \argmax_{\lVert\delta\rVert_p \le \epsilon} L\big(\hat{f}_\Phi(x+\delta), y\big)
   \end{equation}
-  The resulting adversarial sample $x_{adv} = x + \delta^{*}$ is submitted directly to the target system $f_\theta$ under the assumption of cross-model transferability~\cite{papernot2017,dong2018}.
-  \item \textbf{Landscape Stabilization:} Because the adversary cannot verify whether an attack settles into narrow, surrogate-specific loss minima, non-adaptive attacks apply momentum accumulation to stabilize update trajectories across iterations. Dong et al.~\cite{dong2018} formalized Momentum Iterative Fast Gradient Sign Method (MI-FGSM):
+  The resulting adversarial sample $x_{\mathrm{adv}} = x + \delta^{*}$ is submitted directly to the target system $f_\theta$ under the assumption of cross-model transferability~\cite{papernot2017,dong2018}.
+  \item \textbf{Landscape Stabilization:} Because the adversary cannot verify whether an attack settles into narrow, surrogate-specific loss minima, non-adaptive attacks apply momentum accumulation to stabilize update trajectories across iterations. Dong et al.~\cite{dong2018} introduced the Momentum Iterative Fast Gradient Sign Method (MI-FGSM):
   \begin{equation}
     g_{t+1} = \mu \cdot g_t + \frac{\nabla_x L(\hat{f}_\Phi(x_t), y)}{\lVert \nabla_x L(\hat{f}_\Phi(x_t), y) \rVert_1}, \qquad x_{t+1} = \Pi_{x+\mathcal{S}}\big(x_t + \alpha \cdot \sign(g_{t+1})\big)
   \end{equation}
@@ -313,7 +342,7 @@ We formalize three operational regimes: Non-Adaptive Black-Box, Adaptive Black-B
   where $u(\cdot)$ represents a zeroth-order update rule, evolutionary strategy, or geometric boundary adjustment.
   \item \textbf{Circumvention of Obfuscated Gradients:} Athalye et al.~\cite{athalye2018} and Carlini et al.~\cite{carlini2019} demonstrated that defenses relying on gradient masking (shattered gradients, stochastic transformations, or numerical saturation) give a false sense of security. Adaptive adversaries tailor their probing mechanism to bypass these defenses:
   \begin{itemize}
-    \item \textbf{Stochastic Defenses:} Mitigated by combining Natural Evolutionary Strategies (NES) with Expectation Over Transformation (EOT), taking expectations over runtime defense transformations:
+    \item \textbf{Stochastic Defenses:} Circumvented by combining Natural Evolution Strategies (NES) with Expectation Over Transformation (EOT), taking expectations over runtime defense transformations:
     \begin{equation}
       \nabla_x \mathbb{E}_{t \sim T}\big[L(f_\theta(t(x)), y)\big] \approx \frac{1}{B\sigma} \sum_{i=1}^{B} \delta_i\, L\big(f_\theta(t(x+\delta_i)), y\big)
     \end{equation}
@@ -323,7 +352,7 @@ We formalize three operational regimes: Non-Adaptive Black-Box, Adaptive Black-B
     \end{equation}
   \end{itemize}
   \item[] Because Square Attack does not rely on local loss gradients or their numerical approximations, it renders gradient obfuscation defenses ineffective~\cite{carlini2019,andriushchenko2020}.
-  \item \textbf{High Query Consumption:} Adaptive optimization requires query access scales typically ranging from $Q \sim 10^2$ (for random-search score attacks~\cite{andriushchenko2020}) to $Q \sim 10^5$ (for hard-label decision-boundary tracking).
+  \item \textbf{High Query Consumption:} Adaptive optimization requires query budgets typically ranging from $Q \sim 10^2$ (for random-search score attacks~\cite{andriushchenko2020}) to $Q \sim 10^5$ (for hard-label decision-boundary tracking).
 \end{itemize}
 
 \paragraph{Strict Black-Box Attacks (No-Box / Zero-Knowledge).} A strict black-box attack (often designated as a No-Box or Zero-Knowledge threat model~\cite{gao2022,li2020nobox}) represents the most constrained operational setting. It strips away conventional academic relaxations---such as access to identical training data distributions, unlimited query budgets, and continuous logit vectors.
@@ -334,13 +363,61 @@ We formalize three operational regimes: Non-Adaptive Black-Box, Adaptive Black-B
   \begin{equation}
     \hat{y} = \argmax_{c \in \{1, \dots, K\}} f_\theta(x)_c
   \end{equation}
-  \item \textbf{Distributional and Architectural Disparity:} Unlike the assumptions in Papernot et al.~\cite{papernot2017}, the adversary possesses neither the target model's training dataset $D_{train}$ nor architectural knowledge (e.g., whether the victim is a ResNet, a Vision Transformer, or an ensemble). Li et al.~\cite{li2020nobox} formalize practical no-box attacks where the attacker trains generative networks or surrogate models using uncurated, out-of-domain public data or self-supervised feature reconstructors without target feedback.
+  \item \textbf{Distributional and Architectural Disparity:} Unlike the assumptions in Papernot et al.~\cite{papernot2017}, the adversary possesses neither the target model's training dataset $D_{\mathrm{train}}$ nor architectural knowledge (e.g., whether the victim is a ResNet, a Vision Transformer, or an ensemble). Li et al.~\cite{li2020nobox} formalized practical no-box attacks where the attacker trains generative networks or surrogate models using uncurated, out-of-domain public data or self-supervised feature reconstructors without target feedback.
   \item \textbf{Non-Euclidean and Domain Extensions:} Strict black-box threat models extend beyond Euclidean continuous manifolds into discrete, structured topologies. Gao et al.~\cite{gao2022} demonstrated strict black-box adversarial attacks on Graph Neural Networks (GNNs), where attackers modify graph structures (node features and edge connectivity) with zero victim query feedback and restricted topological visibility:
   \begin{equation}
-    \max_{A' \in V_{budget}} L_{GNN}\big(f_\theta(A', X), Y\big)
+    \max_{A' \in V_{\mathrm{budget}}} L_{\mathrm{GNN}}\big(f_\theta(A', X), Y\big)
   \end{equation}
-  showing that topological vulnerabilities can be exploited without model access or interactive feedback.
+  These results show that topological vulnerabilities can be exploited without model access or interactive feedback.
 \end{itemize}
+
+\section{Adversarial Defenses}
+
+Defenses against evasion attacks fall into two broad groups. The first changes how the classifier is trained, so that its decision boundary is harder to cross. The second places a component in front of the classifier, or inside it, whose job is to remove the adversarial part of an input. This section describes representative methods from each group. Whichever group a method belongs to, the protection it offers holds only for the threat model it was evaluated under, so claimed robustness has to be re-tested against adaptive attacks~\cite{carlini2019,athalye2018}.
+
+\subsection{Adversarial Training}
+
+Adversarial training feeds the model adversarial examples produced against its current parameters, so that it learns to classify correctly the very inputs an attacker would submit~\cite{szegedy2014,goodfellow2015}. In its general form it is a saddle-point problem~\cite{madry2018}:
+\begin{equation}
+  \min_{\theta}\ \mathbb{E}_{(x,y)\sim\mathcal{D}}\Big[\max_{\lVert\delta\rVert_p \le \epsilon} J(\theta, x+\delta, y)\Big]
+\end{equation}
+The inner maximization plays the attacker, and the outer minimization is ordinary training on the attacker's output. The variants below differ mainly in how the inner problem is solved, which determines both their cost and their strength.
+
+\subsubsection{FGSM Adversarial Training}
+
+The original proposal solves the inner problem with a single FGSM step, because one extra gradient evaluation per example keeps training close to the cost of standard training~\cite{goodfellow2015}. The training loss mixes the clean and the perturbed objective:
+\begin{equation}
+  \tilde{J}(\theta, x, y) = \alpha\, J(\theta, x, y) + (1-\alpha)\, J\big(\theta,\ x + \epsilon \cdot \sign(\nabla_x J(\theta, x, y)),\ y\big)
+\end{equation}
+where an equal weighting, $\alpha = 0.5$, was used in the original work. Single-step training has two known weaknesses. First, because the perturbation is computed from the true label, the network can learn to recognize the perturbation pattern and read the label from it. This effect, called label leaking, can make accuracy on FGSM examples exceed clean accuracy without improving robustness to other attacks~\cite{kurakin2017scale}. Second, training can suffer catastrophic overfitting, in which robustness to multi-step attacks collapses abruptly while accuracy on FGSM examples stays high. Starting the single step from a random point and choosing the step size with care avoids this and makes single-step training competitive~\cite{wong2020}.
+
+\subsubsection{PGD Adversarial Training}
+
+PGD adversarial training replaces the single step by the iterative attack described in Section~3.4.1: starting from a random point in the $\epsilon$-ball, the inner loop takes several signed-gradient steps and projects back onto the ball after each one~\cite{madry2018}. Treating PGD as a strong first-order adversary turns training into a robust-optimization problem, and networks trained this way resist a wide range of first-order attacks within the chosen budget, which made the method the usual baseline for later work~\cite{madry2018}. The price is computational: an update needs roughly as many forward--backward passes as the inner loop has steps, plus one, so training is several times slower than FGSM training. Robust models also tend to lose some accuracy on clean inputs and benefit from higher network capacity~\cite{madry2018}.
+
+\subsubsection{Ensemble Adversarial Training}
+
+Single-step training on a model's own gradients can lead the model to distort its loss surface near the data points. The linear approximation behind FGSM then becomes misleading, so the model looks robust to the attack it trains against, yet it remains weak against perturbations transferred from other models and against a one-step attack that begins with a small random move~\cite{tramer2018}. Ensemble adversarial training breaks this dependence between the perturbation and the model being trained. At each iteration the adversarial examples are crafted on a model drawn from a pool made up of the current network and several fixed, pre-trained networks, so the training perturbations no longer depend only on the current weights~\cite{tramer2018}. The method improves robustness to black-box attacks built from transferred examples. It does not claim protection against an iterative white-box adversary, for which PGD training remains the stronger option.
+
+\subsubsection{Generative Adversarial Training}
+
+A generative adversarial network (GAN) pits a generator against a discriminator in a two-player game~\cite{goodfellow2014gan}. Two defenses borrow this idea. In the generative adversarial trainer, a generator learns to produce perturbations that fool the classifier while the classifier is trained to withstand them, so the attack distribution is learned instead of being fixed by hand, and new perturbations are cheap to produce once the generator is trained~\cite{lee2017}. Defense-GAN takes a different route: it trains a GAN on clean data only and, at test time, replaces the input $x$ by the generator output $G(z^{*})$, where
+\begin{equation}
+  z^{*} = \argmin_{z}\ \lVert G(z) - x \rVert_2^{2}
+\end{equation}
+is found by a few gradient steps from several random starting points~\cite{samangouei2018}. The classifier then sees only points close to the learned data manifold. Because the procedure does not depend on a particular attack, it can protect an unmodified classifier, but it adds an optimization to every query, and its quality depends on how well the generator covers the data. Since the projection is itself an optimization, a fair evaluation needs an attacker that differentiates through it or approximates it~\cite{athalye2018}.
+
+\subsection{Denoising}
+
+Denoising defenses treat the adversarial perturbation as noise to be removed before classification, or suppressed inside the network. Early work placed a denoising autoencoder in front of the classifier. The authors found that the combined network could still be attacked end to end, and proposed penalizing the network's sensitivity to small input changes instead~\cite{gu2015}. A later pixel-space denoiser, the high-level representation guided denoiser, observed that a small residual error left by the denoiser is amplified as it passes through the layers. It is therefore trained with a loss on the difference between the target network's high-level features for the clean image and for the denoised adversarial image, not on pixel error~\cite{liao2018}. Feature denoising moves the operation inside the classifier: denoising blocks, such as non-local means, are inserted into intermediate feature maps and trained jointly with adversarial training, which suppresses the perturbation's effect at the feature level~\cite{xie2019feature}. As with other pre-processing defenses, the reported robustness of a denoiser should be measured with an attacker who includes it in the gradient computation or approximates it~\cite{athalye2018}.
+
+\section{Conclusion}
+
+This paper surveyed adversarial attacks on deep neural networks and the defenses developed against them. On the attack side, we organized the literature by the adversary's goal, the distance metric that bounds the perturbation, the timing of the attack, and the adversary's knowledge. Within that framework we covered white-box attacks (FGSM, PGD, DeepFool, the Carlini and Wagner attacks, JSMA and universal perturbations) and black-box attacks, which we divided into non-adaptive, adaptive and strict no-box regimes according to how the adversary interacts with the target. We also covered training-time attacks, namely data injection, data modification and logic corruption, alongside evasion attacks at test time.
+
+On the defense side, we described adversarial training in its FGSM, PGD, ensemble and generative forms, together with denoising defenses that act on inputs or on intermediate features. The methods trade protection against cost: single-step training is cheap but can overfit to the attack it uses, PGD training is stronger but several times slower and often lowers clean accuracy, and pre-processing defenses can be defeated by an attacker who accounts for them. The recurring lesson is that a defense is only as credible as its evaluation. Robustness claims should state the threat model and be tested against adaptive attacks that know the defense.
+
+Open problems follow from these limits: making robust training affordable at scale, extending robustness beyond the perturbation budgets used in training, and building evaluation practices that do not overstate protection. We hope the taxonomy given here helps readers place new attacks and defenses within a common framework.
 
 \begin{thebibliography}{99}
 
@@ -403,6 +480,24 @@ We formalize three operational regimes: Non-Adaptive Black-Box, Adaptive Black-B
 \bibitem{gao2022} J. Gao, M. Ding, B. Du, and H. Shen, ``Strict black-box adversarial attacks on graphs,'' in \textit{Proc. AAAI Conf. Artif. Intell. (AAAI)}, vol. 36, no. 1, 2022, pp. 62--70.
 
 \bibitem{li2020nobox} Q. Li, Y. Guo, H. Zha, and H. Chen, ``Practical no-box adversarial attacks against deep neural networks,'' in \textit{Proc. IEEE/CVF Conf. Comput. Vision Pattern Recognit. (CVPR)}, 2020.
+
+\bibitem{kurakin2017scale} A. Kurakin, I. Goodfellow, and S. Bengio, ``Adversarial machine learning at scale,'' in \textit{Proc. Int. Conf. Learn. Represent. (ICLR)}, 2017. [Online]. Available: \url{https://arxiv.org/abs/1611.01236}
+
+\bibitem{wong2020} E. Wong, L. Rice, and J. Z. Kolter, ``Fast is better than free: Revisiting adversarial training,'' in \textit{Proc. Int. Conf. Learn. Represent. (ICLR)}, 2020. [Online]. Available: \url{https://arxiv.org/abs/2001.03994}
+
+\bibitem{tramer2018} F. Tram{\`e}r, A. Kurakin, N. Papernot, I. Goodfellow, D. Boneh, and P. McDaniel, ``Ensemble adversarial training: Attacks and defenses,'' in \textit{Proc. Int. Conf. Learn. Represent. (ICLR)}, 2018. [Online]. Available: \url{https://arxiv.org/abs/1705.07204}
+
+\bibitem{goodfellow2014gan} I. Goodfellow et al., ``Generative adversarial nets,'' in \textit{Proc. Adv. Neural Inf. Process. Syst. (NeurIPS)}, vol. 27, 2014, pp. 2672--2680.
+
+\bibitem{lee2017} H. Lee, S. Han, and J. Lee, ``Generative adversarial trainer: Defense to adversarial perturbations with GAN,'' arXiv:1705.03387, 2017.
+
+\bibitem{samangouei2018} P. Samangouei, M. Kabkab, and R. Chellappa, ``Defense-GAN: Protecting classifiers against adversarial attacks using generative models,'' in \textit{Proc. Int. Conf. Learn. Represent. (ICLR)}, 2018. [Online]. Available: \url{https://arxiv.org/abs/1805.06605}
+
+\bibitem{gu2015} S. Gu and L. Rigazio, ``Towards deep neural network architectures robust to adversarial examples,'' in \textit{Proc. Int. Conf. Learn. Represent. (ICLR) Workshop}, 2015. [Online]. Available: \url{https://arxiv.org/abs/1412.5068}
+
+\bibitem{liao2018} F. Liao, M. Liang, Y. Dong, T. Pang, X. Hu, and J. Zhu, ``Defense against adversarial attacks using high-level representation guided denoiser,'' in \textit{Proc. IEEE/CVF Conf. Comput. Vis. Pattern Recognit. (CVPR)}, 2018, pp. 1778--1787.
+
+\bibitem{xie2019feature} C. Xie, Y. Wu, L. van der Maaten, A. L. Yuille, and K. He, ``Feature denoising for improving adversarial robustness,'' in \textit{Proc. IEEE/CVF Conf. Comput. Vis. Pattern Recognit. (CVPR)}, 2019, pp. 501--509.
 
 \end{thebibliography}
 

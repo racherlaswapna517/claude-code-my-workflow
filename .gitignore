@@ -104,3 +104,7 @@ scripts/*/_outputs/
 # renders them during gating). Published HTML lives in docs/, never here.
 Quarto/*.html
 Quarto/*_files/
+
+*.doc
+*.docx
+/quality_reports
